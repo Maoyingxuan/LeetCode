@@ -1,16 +1,17 @@
-// 先判断是否是环形链表
-var detectCycle = function(head) {
-    if(!head || !head.next) return null;
-    let slow =head.next, fast = head.next.next;
-    while(fast && fast.next && fast!== slow) {
-        slow = slow.next;
-        fast = fast.next.next; 
+function ListNode(val) {
+      this.val = val;
+      this.next = null;
+  }
+//  * @param {ListNode} head
+//  * @return {boolean}
+var hasCycle = function(head) {
+    let slow = head
+    let fast = head
+    while(fast.next&&fast.next.next){
+        slow = slow.next
+        fast = fast.next.next
+        if(slow == fast) return true
     }
-    if(!fast || !fast.next ) return null;
-    slow = head;
-    while (fast !== slow) {
-        slow = slow.next;
-        fast = fast.next;
-    }
-    return slow;
+    return false
 };
+hasCycle(head = [3,2,0,-4])
