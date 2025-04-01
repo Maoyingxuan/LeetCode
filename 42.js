@@ -3,31 +3,29 @@
  * @return {number}
  */
 var trap = function(height) {
-    let left = 0
-    let length = height.length
-    let right = length - 1
-    let left_max = 0, right_max = 0
-    let ans = 0
-    while(left<right){
-        if(height[left]<height[right]){
-            if(height[left] >= left_max)
-            {
-                left_max = height[left]
-            }else{
-                ans += left_max - height[left]
-            }
-            left++
+    let max = Math.max(...height)
+    let sq = 0
+    //从左往右
+    let i = 0 
+    let temp = 0
+    while(height[i]!==max){
+        if(height[i] > temp){
+            temp = height[i]
         }
-        else{
-            if(height[right] >= right_max){
-                right_max = height[right]
-            }else{
-                ans += right_max - height[right]
-            }
-            right--
-        }
+        sq += max - temp
+        i++
     }
-    // console.log(ans)
-    return ans
+    let k = height.length - 1
+    temp = 0
+    while(height[k]!==max){
+        if(height[k] > temp){
+            temp = height[k]
+        }
+        sq += max - temp
+        k--
+    }
+    for(let i = 0; i < height.length; i++) sq += height[i]
+    return (max * height.length - sq)
+    
 };
 trap([4,2,0,3,2,5])

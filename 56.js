@@ -3,20 +3,21 @@
  * @return {number[][]}
  */
 var merge = function(intervals) {
+    intervals = intervals.sort((a,b)=>a[0]-b[0])
+    // console.log(intervals);
     let res = []
-    intervals.sort((a,b)=>(a[0]-b[0]))
-    let prev = intervals[0]
-    for(let nums in intervals){
-        let curr = intervals[nums]
-        if(prev[1] >= curr[0]){
-            prev[1] = Math.max(prev[1],curr[1])
+    res.push(intervals[0])
+    for(let i = 1; i < intervals.length; i++){
+        if(intervals[i][0] <= res[res.length-1][1]){
+            let temp = res.pop()
+            res.push([temp[0],Math.max(intervals[i][1],temp[1])])
+        }else{
+            res.push(intervals[i])
         }
-        else{
-            res.push(prev)
-            prev = curr
-        }
+        // console.log(res);
+        
     }
-    res.push(prev)
+    // console.log(res);
     return res
 };
-merge([[1,3],[8,10],[2,6],[15,18]])
+merge([[2,3],[4,5],[6,7],[8,9],[1,10]])
