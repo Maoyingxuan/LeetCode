@@ -3,36 +3,49 @@
  * @param {number} target
  * @return {number}
  */
-var search = function(nums, target) {
-    let len = nums.length - 1
-    if(nums.length == 0) return -1
-    if(nums.length == 1) {
-        if(nums[0] == target) return 0
-        else return -1
+const findMin = (nums) => {
+    let left = 0
+    let right = nums.length - 1
+    while(left < right){
+        let mid = Math.floor(left+(right-left)/2)
+        if(nums[mid] < nums[nums.length-1]){
+            right = mid 
+        }else{
+            left = mid + 1
+        }
     }
-    let l = 0
-    let r = len
-    while(r-l>0){
-        if(r-l == 1){
-            if(nums[l] === target) return l
-            else if(nums[r] === target) return r
-            else return -1
+    return right
+}
+const find = (nums, start, end, target) => {
+    nums = nums.slice(start,end)
+    let l = 0, r= nums.length - 1
+    while(l <= r){
+        let mid = Math.floor(l + (r - l)/2)
+        if(nums[mid] == target){
+            return mid
+        }else if(nums[mid] < target){
+            l = mid + 1
+        }else{
+            r = mid - 1
         }
-        
-        let mid = l + Math.floor((r-l)/2)
-        if(nums[mid] === target) return mid
-        else if(nums[l] <= nums[mid] ){
-            if(nums[l]<=target&&target<=nums[mid]){
-                r = mid
-            }
-            else l = mid
-        }
-        else if( nums[mid] <= nums[r]){
-            if(nums[mid]<=target&&target<=nums[r]){
-                l = mid
-            }
-            else r = mid
-        }
+    }
+    return -1
+}
+var search = function(nums, target) {
+    let min = findMin(nums)
+    // console.log(min);
+    let nums_left = nums.slice(0,min)
+    let nums_right = nums.slice(min,nums.length+1)
+    // console.log(nums_left);
+    // console.log(nums_right);
+    if(target <= nums[nums.length-1]){
+        let res = find(nums,min,nums.length,target)
+         if(res==-1){
+            return -1
+         }
+         return res+min
+    }else{
+        return find(nums,0,min,target)
     }
 };
-console.log(search([5,1,3],3))
+console.log(search([3,1],0))
