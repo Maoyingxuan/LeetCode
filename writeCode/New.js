@@ -1,8 +1,8 @@
 function New(constructor,...args){
     let newObj = {}
-    obj.__proto__ = constructor.prototype 
-    const res = constructor.apply(obj, args)
-    if((typeof result === "object" && result !== null) || typeof result === "function"){
+    newObj.__proto__ = constructor.prototype 
+    const res = constructor.apply(newObj, args)
+    if((typeof res === "object" && res !== null) || typeof res === "function"){
         return res
     }else{
         return newObj
